@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SleepScheduleForm = () => {
+const SleepScheduleForm = ({}) => {
   const [mySleepStart, setMySleepStart] = useState("");
   const [mySleepEnd, setMySleepEnd] = useState("");
   const [theirSleepStart, setTheirSleepStart] = useState("");
@@ -8,13 +8,18 @@ const SleepScheduleForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // save the sleep schedules for later use
     const mySchedule = { sleepStart: mySleepStart, sleepEnd: mySleepEnd };
-    const theirSchedule = { sleepStart: theirSleepStart, sleepEnd: theirSleepEnd };
+    const theirSchedule = {
+      sleepStart: theirSleepStart,
+      sleepEnd: theirSleepEnd,
+    };
 
     // convert the other person's sleep schedule to local timezone
-    const theirSleepStartLocal = new Date(`1970-01-01T${theirSchedule.sleepStart}`);
+    const theirSleepStartLocal = new Date(
+      `1970-01-01T${theirSchedule.sleepStart}`
+    );
     const theirSleepEndLocal = new Date(`1970-01-01T${theirSchedule.sleepEnd}`);
 
     console.log("My sleep schedule:", mySchedule);
@@ -81,4 +86,3 @@ const SleepScheduleForm = () => {
 };
 
 export default SleepScheduleForm;
-

@@ -28,6 +28,7 @@ const TimezoneForm = () => {
   
     setSelectedTimezones({ myTimezone, theirTimezone, timeDifference: newTimeDifference });
     setTimeDifference(newTimeDifference);
+
   };
 
   return (
@@ -69,11 +70,13 @@ const TimezoneForm = () => {
         type="submit"
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-14 rounded "
       >
-        Next 👉
+        Submit
       </button>
       <div className="text-center">{timeDifference}</div>
+      
     </form>
   );
 };
+
 
 export default TimezoneForm;
