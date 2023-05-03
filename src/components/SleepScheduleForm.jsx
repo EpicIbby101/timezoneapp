@@ -1,83 +1,40 @@
 import React, { useState } from "react";
+import moment from "moment-timezone";
 
-const SleepScheduleForm = ({}) => {
-  const [mySleepStart, setMySleepStart] = useState("");
-  const [mySleepEnd, setMySleepEnd] = useState("");
-  const [theirSleepStart, setTheirSleepStart] = useState("");
-  const [theirSleepEnd, setTheirSleepEnd] = useState("");
+const SleepScheduleForm = ({ onSubmit }) => {
+  const [userSleepSchedule, setUserSleepSchedule] = useState(moment().format("HH:mm"));
+  const [otherPersonSleepSchedule, setOtherPersonSleepSchedule] = useState(moment().format("HH:mm"));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // save the sleep schedules for later use
-    const mySchedule = { sleepStart: mySleepStart, sleepEnd: mySleepEnd };
-    const theirSchedule = {
-      sleepStart: theirSleepStart,
-      sleepEnd: theirSleepEnd,
-    };
-
-    // convert the other person's sleep schedule to local timezone
-    const theirSleepStartLocal = new Date(
-      `1970-01-01T${theirSchedule.sleepStart}`
-    );
-    const theirSleepEndLocal = new Date(`1970-01-01T${theirSchedule.sleepEnd}`);
-
-    console.log("My sleep schedule:", mySchedule);
-    console.log("Their sleep schedule in their timezone:", theirSchedule);
-    console.log("Their sleep schedule in my local timezone:", {
-      sleepStart: theirSleepStartLocal.toLocaleTimeString(),
-      sleepEnd: theirSleepEndLocal.toLocaleTimeString(),
-    });
+    onSubmit(userSleepSchedule, otherPersonSleepSchedule);
   };
 
   return (
     <form
-      className="flex flex-col items-center justify-center space-y-3 mt-4"
+      className="flex flex-col items-center justify-center space-y-3 mt-3"
       onSubmit={handleSubmit}
     >
-      <div className="flex">
-        <label htmlFor="mySleepStart">I sleep from</label>
-        <input
-          type="time"
-          id="mySleepStart"
-          value={mySleepStart}
-          onChange={(e) => setMySleepStart(e.target.value)}
-          className="text-black p-1 mb-3 ml-2 mr-2"
-        />
-        <div>
-          <label htmlFor="mySleepEnd">to</label>
-          <input
-            type="time"
-            id="mySleepEnd"
-            value={mySleepEnd}
-            onChange={(e) => setMySleepEnd(e.target.value)}
-            className="text-black p-1 mb-3 ml-2 mr-2"
-          />
-        </div>
-      </div>
-      <div>
-        <label htmlFor="theirSleepStart">
-          They sleep from (in their timezone)
-        </label>
-        <input
-          type="time"
-          id="theirSleepStart"
-          value={theirSleepStart}
-          onChange={(e) => setTheirSleepStart(e.target.value)}
-          className="text-black p-1 mb-3 ml-2 mr-2"
-        />
-        <label htmlFor="theirSleepEnd">to</label>
-        <input
-          type="time"
-          id="theirSleepEnd"
-          value={theirSleepEnd}
-          onChange={(e) => setTheirSleepEnd(e.target.value)}
-          className="text-black p-1 mb-3 ml-2 mr-2"
-        />
-      </div>
+      <label htmlFor="userSleepSchedule">Your Sleep Schedule</label>
+      <input
+        type="time"
+        id="userSleepSchedule"
+        value={userSleepSchedule}
+        onChange={(e) => setUserSleepSchedule(e.target.value)}
+        className="text-black"
+      />
+      <label htmlFor="otherPersonSleepSchedule">Other Persons Sleep Schedule</label>
+      <input
+        type="time"
+        id="otherPersonSleepSchedule"
+        value={otherPersonSleepSchedule}
+        onChange={(e) => setOtherPersonSleepSchedule(e.target.value)}
+        className="text-black"
+
+      />
       <button
         type="submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-14 rounded"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-14 rounded "
       >
         Submit
       </button>
@@ -85,4 +42,4 @@ const SleepScheduleForm = ({}) => {
   );
 };
 
-export default SleepScheduleForm;
+export default SleepScheduleForm

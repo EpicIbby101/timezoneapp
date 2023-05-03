@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment-timezone";
+import SleepScheduleForm from "./SleepScheduleForm";
 
 const TimezoneForm = () => {
   const [myTimezone, setMyTimezone] = useState(
@@ -12,9 +13,14 @@ const TimezoneForm = () => {
     theirTimezone,
     timeDifference
   });
+  const [showSleepScheduleForm, setShowSleepScheduleForm] = useState(false);
   
-
   const timezones = moment.tz.names();
+
+  const handleSleepScheduleSubmit = (userSleepSchedule, otherPersonSleepSchedule) => {
+    console.log("User Sleep Schedule:", userSleepSchedule);
+    console.log("Other Person Sleep Schedule:", otherPersonSleepSchedule);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,12 +32,19 @@ const TimezoneForm = () => {
     const timeDiffInHours = timeDiffInMinutes / 60;
     const newTimeDifference = `The time difference is ${timeDiffInHours} hours. If it's ${myTime} for you, it'll be ${theirTime} for them.`;
   
+  
     setSelectedTimezones({ myTimezone, theirTimezone, timeDifference: newTimeDifference });
     setTimeDifference(newTimeDifference);
+
+    console.log(newTimeDifference)
+
+    setShowSleepScheduleForm(true);
 
   };
 
   return (
+    <>
+    {!showSleepScheduleForm && (
     <form
       className="flex flex-col items-center justify-center space-y-3 mt-3"
       onSubmit={handleSubmit}
@@ -73,8 +86,12 @@ const TimezoneForm = () => {
         Submit
       </button>
       <div className="text-center">{timeDifference}</div>
-      
     </form>
+    )}
+    {showSleepScheduleForm && (
+      <SleepScheduleForm onSubmit={handleSleepScheduleSubmit} />
+    )}
+    </>
   );
 };
 
