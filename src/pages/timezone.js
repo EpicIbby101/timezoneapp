@@ -9,7 +9,6 @@ const TimezonePage = () => {
       <Header />
       <div className="flex flex-col items-center mt-16 sm:mt-32 p-16 h-full font-mono z-10">
         <h1 className="text-4xl font-bold mb-4">Find the Best Time To Talk</h1>
-        <p className="mb-3">Please select your timezone and the timezone of the person you wish to talk to</p>
         <TimezoneForm />
       </div>
     </div>
