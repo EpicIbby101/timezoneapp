@@ -43,18 +43,16 @@ const TimezoneForm = () => {
     let currentRange = null;
 
     while (currentTime.isBefore(endTime)) {
-      const userAwake = currentTime.isBetween(
-        userAwakeTime.start,
-        userAwakeTime.end,
-        null,
-        "[)"
-      );
-      const otherPersonAwake = currentTime.isBetween(
-        otherPersonAwakeTime.start,
-        otherPersonAwakeTime.end,
-        null,
-        "[)"
-      );
+      const userAwake =
+        currentTime.isSame(userAwakeTime.start) ||
+        currentTime.isSame(userAwakeTime.end) ||
+        currentTime.isBetween(userAwakeTime.start, userAwakeTime.end, null, "[]");
+
+        const otherPersonAwake =
+        currentTime.isSame(otherPersonAwakeTime.start) ||
+        currentTime.isSame(otherPersonAwakeTime.end) ||
+        currentTime.isBetween(otherPersonAwakeTime.start, otherPersonAwakeTime.end, null, "[]");
+
 
       if (userAwake && otherPersonAwake) {
         if (!currentRange) {
@@ -123,19 +121,13 @@ const TimezoneForm = () => {
       otherPersonWakeTimeInUserTimezone
     );
 
-    console.log(
-      "Available Time Ranges:",
-      availableTimeRanges.map((range) => ({
-        start: range.start.format("HH:mm"),
-        end: range.end.format("HH:mm"),
-      }))
-    );
+    console.log("Available Time Ranges:", availableTimeRanges.map(range => ({
+      start: range.start.format("HH:mm"),
+      end: range.end.format("HH:mm")
+    })));
 
     if (availableTimeRanges.length > 0) {
-      console.log(
-        "Best Time to Talk:",
-        availableTimeRanges[0].start.format("HH:mm")
-      );
+      console.log("Best Time to Talk:", availableTimeRanges[0].start.format("HH:mm"));
     } else {
       console.log("No common available time found.");
     }
