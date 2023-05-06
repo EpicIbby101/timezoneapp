@@ -15,6 +15,10 @@ const TimezoneForm = () => {
   });
   const [showSleepScheduleForm, setShowSleepScheduleForm] = useState(false);
   const timezones = moment.tz.names();
+  const [notification, setNotification] = useState(null);
+  const closeNotification = () => {
+    setNotification(null);
+  };
 
   const calculateAvailableTimeRanges = (
     userSleepTime,
@@ -46,13 +50,22 @@ const TimezoneForm = () => {
       const userAwake =
         currentTime.isSame(userAwakeTime.start) ||
         currentTime.isSame(userAwakeTime.end) ||
-        currentTime.isBetween(userAwakeTime.start, userAwakeTime.end, null, "[]");
+        currentTime.isBetween(
+          userAwakeTime.start,
+          userAwakeTime.end,
+          null,
+          "[]"
+        );
 
-        const otherPersonAwake =
+      const otherPersonAwake =
         currentTime.isSame(otherPersonAwakeTime.start) ||
         currentTime.isSame(otherPersonAwakeTime.end) ||
-        currentTime.isBetween(otherPersonAwakeTime.start, otherPersonAwakeTime.end, null, "[]");
-
+        currentTime.isBetween(
+          otherPersonAwakeTime.start,
+          otherPersonAwakeTime.end,
+          null,
+          "[]"
+        );
 
       if (userAwake && otherPersonAwake) {
         if (!currentRange) {
@@ -74,7 +87,12 @@ const TimezoneForm = () => {
       availableTimeRanges.push(currentRange);
     }
 
+    availableTimeRanges.forEach((range) => {
+      range.end.subtract(1.5, "hours");
+    });
+  
     return availableTimeRanges;
+
   };
 
   const handleSleepScheduleSubmit = (
@@ -109,7 +127,7 @@ const TimezoneForm = () => {
       otherPersonWakeTime
     );
     console.log(
-      "Other person sleeps from (Converted to User's Timezone)",
+      "In your local time, the other person sleeps from:",
       otherPersonSleepTimeInUserTimezone,
       "to",
       otherPersonWakeTimeInUserTimezone
@@ -121,16 +139,36 @@ const TimezoneForm = () => {
       otherPersonWakeTimeInUserTimezone
     );
 
-    console.log("Available Time Ranges:", availableTimeRanges.map(range => ({
-      start: range.start.format("HH:mm"),
-      end: range.end.format("HH:mm")
-    })));
+    console.log(
+      "Available Time Ranges:",
+      availableTimeRanges.map((range) => ({
+        start: range.start.format("HH:mm"),
+        end: range.end.format("HH:mm"),
+      }))
+    );
 
     if (availableTimeRanges.length > 0) {
-      console.log("Best Time to Talk:", availableTimeRanges[0].start.format("HH:mm"));
+      console.log(
+        "Best Time to Talk:",
+        availableTimeRanges[0].start.format("HH:mm")
+      );
     } else {
       console.log("No common available time found.");
     }
+
+    const timeDifferenceMessage = selectedTimezones.timeDifference;
+    const userSleepScheduleMessage = `You sleep from ${userSleepTime} to ${userWakeTime}`
+    const convertedSleepScheduleMessage = <p>The other person sleeps from <br /> {otherPersonSleepTime} to {otherPersonWakeTime} <br /> In your local timezone, that&apos;s <br /> {otherPersonSleepTimeInUserTimezone} to {otherPersonWakeTimeInUserTimezone}</p>
+
+    if (availableTimeRanges.length > 0) {
+      const availableTimes = availableTimeRanges.map((range) =>
+        `${range.start.format("HH:mm")} - ${range.end.format("HH:mm")}`
+      );
+      setNotification({ timeDifferenceMessage, userSleepScheduleMessage, convertedSleepScheduleMessage, availableTimes });
+    } else {
+      setNotification({ timeDifferenceMessage, userSleepScheduleMessage,  convertedSleepScheduleMessage, availableTimes: ["No common available time found."] });
+    }
+    
   };
 
   const handleSubmit = (e) => {
@@ -141,7 +179,7 @@ const TimezoneForm = () => {
     const myOffset = moment.tz.zone(myTimezone).utcOffset(moment());
     const timeDiffInMinutes = theirOffset - myOffset;
     const timeDiffInHours = timeDiffInMinutes / 60;
-    const newTimeDifference = `The time difference is ${timeDiffInHours} hours. If it's ${myTime} for you, it'll be ${theirTime} for them.`;
+    const newTimeDifference = <p>The time difference is {timeDiffInHours} hours. <br /> If it&apos;s {myTime} for you, it&apos;ll be {theirTime} for them.</p>
 
     setSelectedTimezones({
       myTimezone,
@@ -213,6 +251,38 @@ const TimezoneForm = () => {
       )}
       {showSleepScheduleForm && (
         <SleepScheduleForm onSubmit={handleSleepScheduleSubmit} />
+      )}
+{notification && (
+  <div
+    className="fixed inset-0 bg-black bg-opacity-50 z-10 flex items-center justify-center text-black"
+    onClick={closeNotification}
+  >
+    <div
+      className="bg-white p-6 rounded shadow-md text-center w-96"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h2 className="text-2xl font-bold mb-4">Here Are The Results</h2>
+      <div className="text-md mb-4">{notification.timeDifferenceMessage}</div>
+      <p className="text-md mb-4">{notification.userSleepScheduleMessage}</p>
+      <div className="text-md mb-4">{notification.convertedSleepScheduleMessage}</div>
+      <div className="bg-gray-300 pb-0 border-2 border-indigo-500/100">
+      <h3 className="text-xl font-semibold">Best Time Range to Talk</h3>
+      <p className="text-sm mb-1">Based on when you&apos;re both awake</p>
+      <ul className="text-lg mb-4">
+        {notification.availableTimes.map((timeRange, index) => (
+          <li key={index}>{timeRange}</li>
+        ))}
+      </ul>
+      </div>
+      <p className="text-xs mt-2">Note: 1 hour has been subtracted from the total available time to account for the hour before bed where it is advised to limit your device usage</p>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+        onClick={closeNotification}
+      >
+        Close
+      </button>
+          </div>
+        </div>
       )}
     </>
   );
