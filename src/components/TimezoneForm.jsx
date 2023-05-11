@@ -119,42 +119,12 @@ const TimezoneForm = () => {
       myTimezone
     );
 
-    console.log("I sleep from", userSleepTime, "to", userWakeTime);
-    console.log(
-      "Other person sleeps from (Local)",
-      otherPersonSleepTime,
-      "to",
-      otherPersonWakeTime
-    );
-    console.log(
-      "In your local time, the other person sleeps from:",
-      otherPersonSleepTimeInUserTimezone,
-      "to",
-      otherPersonWakeTimeInUserTimezone
-    );
     const availableTimeRanges = calculateAvailableTimeRanges(
       userSleepTime,
       userWakeTime,
       otherPersonSleepTimeInUserTimezone,
       otherPersonWakeTimeInUserTimezone
     );
-
-    console.log(
-      "Available Time Ranges:",
-      availableTimeRanges.map((range) => ({
-        start: range.start.format("HH:mm"),
-        end: range.end.format("HH:mm"),
-      }))
-    );
-
-    if (availableTimeRanges.length > 0) {
-      console.log(
-        "Best Time to Talk:",
-        availableTimeRanges[0].start.format("HH:mm")
-      );
-    } else {
-      console.log("No common available time found.");
-    }
 
     const timeDifferenceMessage = selectedTimezones.timeDifference;
     const userSleepScheduleMessage = `You sleep from ${userSleepTime} to ${userWakeTime}`
