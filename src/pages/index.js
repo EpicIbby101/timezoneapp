@@ -8,7 +8,7 @@ export default function Home() {
       <Image src="/images/earth.png" alt="Background" className="z-10" fill />
       <Header />
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <div className="flex flex-col items-center p-16 h-full">
+        <div className="flex flex-col items-center p-10 sm:p-16 h-full">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4">
             Welcome to Timezone Buddy
           </h1>
