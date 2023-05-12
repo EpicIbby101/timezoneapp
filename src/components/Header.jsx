@@ -8,7 +8,7 @@ return(
       Created by: Kevin Grittner | <a href="https://www.kevingrittner.com" target="_blank" className='text-blue-600 ml-1'>www.kevingrittner.com</a>
     </p>
     <Link href="/">
-    <Image src="/images/home-button-icon.png" alt="home" width={50} height={50} className="mt-24 lg:mt-3 sm:mt-20 ml-4" />
+    <Image src="/images/home-button-icon.png" alt="home" width={50} height={50} className="mt-20 lg:mt-3 sm:mt-20 ml-4" />
     </Link>
     </div>
 )
