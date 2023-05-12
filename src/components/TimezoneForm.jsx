@@ -134,17 +134,22 @@ const TimezoneForm = () => {
       const availableTimes = availableTimeRanges.map((range) =>
         `${range.start.format("HH:mm")} - ${range.end.format("HH:mm")}`
       );
-      setNotification({ timeDifferenceMessage, userSleepScheduleMessage, convertedSleepScheduleMessage, availableTimes });
+      const availableTimesInOtherPersonTimezone = availableTimeRanges.map((range) => {
+        const startInOtherPersonTimezone = range.start.clone().tz(theirTimezone);
+        const endInOtherPersonTimezone = range.end.clone().tz(theirTimezone);
+        return `${startInOtherPersonTimezone.format("HH:mm")} - ${endInOtherPersonTimezone.format("HH:mm")}`
+      })
+      setNotification({ timeDifferenceMessage, userSleepScheduleMessage, convertedSleepScheduleMessage, availableTimesInOtherPersonTimezone, availableTimes });
     } else {
-      setNotification({ timeDifferenceMessage, userSleepScheduleMessage,  convertedSleepScheduleMessage, availableTimes: ["No common available time found."] });
+      setNotification({ timeDifferenceMessage, userSleepScheduleMessage,  convertedSleepScheduleMessage, availableTimes: ["No common available time found."], availableTimesInOtherPersonTimezone: [] });
     }
     
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const myTime = moment.tz(myTimezone).format("h:mm A");
-    const theirTime = moment.tz(theirTimezone).format("h:mm A");
+    const myTime = moment.tz(myTimezone).format("HH:mm");
+    const theirTime = moment.tz(theirTimezone).format("HH:mm");
     const theirOffset = moment.tz.zone(theirTimezone).utcOffset(moment());
     const myOffset = moment.tz.zone(myTimezone).utcOffset(moment());
     const timeDiffInMinutes = theirOffset - myOffset;
@@ -236,10 +241,17 @@ const TimezoneForm = () => {
       <p className="text-md mb-4">{notification.userSleepScheduleMessage}</p>
       <div className="text-md mb-4">{notification.convertedSleepScheduleMessage}</div>
       <div className="bg-gray-300 pb-0 border-2 border-indigo-500/100">
-      <h3 className="text-xl font-semibold">Best Time Range to Talk</h3>
+      <h3 className="text-xl font-semibold mt-1">Best Time Range to Talk</h3>
       <p className="text-sm mb-1">Based on when you&apos;re both awake</p>
-      <ul className="text-lg mb-4">
+      <ul className="text-lg mb-1">
         {notification.availableTimes.map((timeRange, index) => (
+          <li key={index}>{timeRange}</li>
+        ))}
+      </ul>
+      <p className="mb-2">Or</p>
+      <p className="text-sm mb-1">In the other person&apos;s timezone, that&apos;s</p>
+      <ul className="text-lg mb-4">
+        {notification.availableTimesInOtherPersonTimezone.map((timeRange, index) => (
           <li key={index}>{timeRange}</li>
         ))}
       </ul>
