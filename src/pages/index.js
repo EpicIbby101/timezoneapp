@@ -12,7 +12,7 @@ export default function Home() {
           <h1 className="text-2xl sm:text-3xl font-bold mb-4">
             Welcome to Timezone Buddy
           </h1>
-          <p className="text-base sm:text-xl mb-8 text-center">
+          <p className="text-sm sm:text-lg mb-8 text-center">
             This app is designed to calculate the best time for two people from
             different timezones to call or talk to each other without disrupting
             their circadian rhythm and sleep patterns. <br />
