@@ -31,6 +31,7 @@ const SleepScheduleForm = ({ onSubmit }) => {
       >
         <div className="mb-3">
           <label htmlFor="userSleepTime">I sleep from </label>
+          <br />
           <input
             type="time"
             id="userSleepTime"
@@ -49,6 +50,7 @@ const SleepScheduleForm = ({ onSubmit }) => {
         </div>
         <div>
           <label htmlFor="otherPersonSleepTime">They sleep from </label>
+          <br />
           <input
             type="time"
             id="otherPersonSleepTime"
@@ -62,7 +64,7 @@ const SleepScheduleForm = ({ onSubmit }) => {
             id="otherPersonWakeTime"
             value={otherPersonWakeTime}
             onChange={(e) => setOtherPersonWakeTime(e.target.value)}
-            className="text-black"
+            className="text-black mb-5"
           />
         </div>
         <button
