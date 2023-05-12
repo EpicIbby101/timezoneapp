@@ -201,7 +201,7 @@ const TimezoneForm = () => {
                 id="theirTimezone"
                 value={theirTimezone}
                 onChange={(e) => setTheirTimezone(e.target.value)}
-                className="text-black p-1 mb-3"
+                className="text-black p-1 mb-5"
               >
                 {timezones.map((timezone) => (
                   <option
@@ -216,11 +216,10 @@ const TimezoneForm = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-14 rounded "
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-14 rounded"
             >
               Submit
             </button>
-            <div className="text-center">{timeDifference}</div>
           </form>
         </div>
       )}
