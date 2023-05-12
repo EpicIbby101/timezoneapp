@@ -56,7 +56,7 @@ const SleepScheduleForm = ({ onSubmit }) => {
             id="otherPersonSleepTime"
             value={otherPersonSleepTime}
             onChange={(e) => setOtherPersonSleepTime(e.target.value)}
-            className="text-black"
+            className="text-black max-w-sm"
           />
           <label htmlFor="otherPersonWakeTime"> To </label>
           <input
