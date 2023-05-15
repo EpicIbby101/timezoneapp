@@ -9,7 +9,7 @@ export default function Home() {
       <Header />
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <div className="flex flex-col items-center p-10 sm:p-16 h-full">
-          <h1 className="text-2xl sm:text-3xl font-bold mb-4">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-4">
             Welcome to Timezone Buddy
           </h1>
           <p className="text-sm sm:text-lg mb-8 text-center">

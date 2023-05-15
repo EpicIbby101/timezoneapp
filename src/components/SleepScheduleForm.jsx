@@ -22,7 +22,7 @@ const SleepScheduleForm = ({ onSubmit }) => {
   };
   return (
     <div>
-      <p className="mb-3">
+      <p className="mb-4">
         Now input your sleep schedule and the sleep schedule of the other person
       </p>
       <form
@@ -45,18 +45,19 @@ const SleepScheduleForm = ({ onSubmit }) => {
             id="userWakeTime"
             value={userWakeTime}
             onChange={(e) => setUserWakeTime(e.target.value)}
-            className="text-black"
+            className="text-black mt-2"
           />
         </div>
+        <p>And</p>
         <div>
-          <label htmlFor="otherPersonSleepTime">They sleep from </label>
+          <label htmlFor="otherPersonSleepTime">In their timezone they sleep from </label>
           <br />
           <input
             type="time"
             id="otherPersonSleepTime"
             value={otherPersonSleepTime}
             onChange={(e) => setOtherPersonSleepTime(e.target.value)}
-            className="text-black max-w-sm"
+            className="text-black"
           />
           <label htmlFor="otherPersonWakeTime"> To </label>
           <input
@@ -64,12 +65,12 @@ const SleepScheduleForm = ({ onSubmit }) => {
             id="otherPersonWakeTime"
             value={otherPersonWakeTime}
             onChange={(e) => setOtherPersonWakeTime(e.target.value)}
-            className="text-black mb-5"
+            className="text-black mb-4 mt-2"
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-14 rounded "
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-14 rounded"
         >
           Submit
         </button>
