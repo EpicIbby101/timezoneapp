@@ -9,7 +9,6 @@ Built on React using Next.js and Tailwind for app styling.
 - Sleep schedule and circadian rhythm taken into consideration. Adjustments made from total available time to account for the time before bed where it's advise to not use phones
 - Takes your timezone and the other person's and calculates the time difference
 - Responsive design, mobile resolution friendly
-- 
 
 ## Demo
 
